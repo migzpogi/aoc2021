@@ -32,4 +32,23 @@ def count_increased(list_of_depths):
     return increased_count
 
 
-print(count_increased(input_file_to_list("day01_input.txt")))
+def sum_of_sliding_three_measurements(list_of_depths):
+    """
+    Gets the sum of a three-measurement sliding window
+    :param list_of_depths:
+    :return:
+    """
+    sum_of_slides = []
+    slide_size = 3
+    depths = list(map(lambda x: int(x), list_of_depths))  # convert elements to int
+
+    for i in range(len(depths) - slide_size + 1):
+        sum_of_slides.append(sum(depths[i: i+slide_size]))
+
+    return count_increased(sum_of_slides)
+
+
+
+measurements = input_file_to_list("day01_input.txt")
+print(count_increased(measurements))
+print(sum_of_sliding_three_measurements(measurements))
