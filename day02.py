@@ -28,3 +28,23 @@ for step in steps:
         vertical_pos -= unit
 
 print(horizontal_pos * vertical_pos)
+
+horizontal_pos = 0
+vertical_pos = 0
+aim = 0
+
+steps = input_file_to_list("day02_input.txt")
+# steps = input_file_to_list("sample.txt")
+for step in steps:
+    instruction = step.split(' ')
+    move = instruction[0]
+    unit = int(instruction[1])
+    if move == 'forward':
+        horizontal_pos += unit
+        vertical_pos += (aim * unit)
+    if move == 'down':
+        aim += unit
+    if move == 'up':
+        aim -= unit
+
+print(horizontal_pos * vertical_pos)
