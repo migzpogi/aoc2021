@@ -76,18 +76,6 @@ def check_win(card):
     return False
 
 
-# a = [14, 21, 17, 24, 4, 10, 16, 15, 9, 19, 18, 8, 23, 26, 20, 22, 11, 13, 6, 5, 2, 0, 12, 3, 7]
-# c = create_card(a)
-#
-# c[0].hit = True
-# c[5].hit = True
-# c[10].hit = True
-# c[15].hit = True
-# c[20].hit = True
-# c[18].hit = True
-#
-# print(check_win(c))
-
 call_numbers = []
 cards = []
 temp = []
@@ -111,10 +99,12 @@ for idx, line in enumerate(x):
                 if i != '' and i != 'a':
                     temp.append(i)
 
-
+cards_won = []
 def run():
     for called in call_numbers:
         for idx, card in enumerate(cards):
+            if idx in cards_won:
+                continue
             for c in card:
                 if c.value == called:
                     c.hit = True
@@ -126,7 +116,8 @@ def run():
                         not_hit += x.value
 
                 print(f"Not hit {not_hit}")
+                cards_won.append(idx)
 
-                return
+                # return
 
 run()
