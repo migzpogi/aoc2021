@@ -15,11 +15,20 @@ class Coordinates:
                 return "vi"
             else:
                 return "vd"
-        if self.y1 == self.y2:
+        elif self.y1 == self.y2:
             if self.x2 > self.x1:
                 return "hi"
             else:
                 return "hd"
+        else:
+            if self.x2 > self.x1 and self.y2 > self.y1:
+                return "ddr"
+            if self.x2 < self.x1 and self.y2 < self.y1:
+                return "dul"
+            if self.x2 > self.x1 and self.y2 < self.y1:
+                return "dur"
+            if self.x2 < self.x1 and self.y2 > self.y1:
+                return "ddl"
 
     def points_in_between(self):
         points = []
@@ -35,6 +44,38 @@ class Coordinates:
         if self.orientation == 'hd':
             for i in range(self.x1, self.x2-1, -1):
                 points.append((i, self.y1))
+        if self.orientation == 'ddr':
+            x1 = self.x1
+            x2 = self.x2
+            y1 = self.y1
+            for i in range(-1, x2-x1):
+                points.append((x1, y1))
+                x1 += 1
+                y1 += 1
+        if self.orientation == 'dul':
+            x1 = self.x1
+            x2 = self.x2
+            y1 = self.y1
+            for i in range(-1, x1 - x2):
+                points.append((x1, y1))
+                x1 -= 1
+                y1 -= 1
+        if self.orientation == 'dur':
+            x1 = self.x1
+            x2 = self.x2
+            y1 = self.y1
+            for i in range(-1, x2 - x1):
+                points.append((x1, y1))
+                x1 += 1
+                y1 -= 1
+        if self.orientation == 'ddl':
+            x1 = self.x1
+            x2 = self.x2
+            y1 = self.y1
+            for i in range(-1, x1 - x2):
+                points.append((x1, y1))
+                x1 -= 1
+                y1 += 1
 
         return points
 
@@ -92,4 +133,5 @@ for p in point_count.items():
         intersect += 1
 
 print(intersect)
+
 
