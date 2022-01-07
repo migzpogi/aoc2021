@@ -22,6 +22,8 @@ class LanternSchool:
 
     def days_elapsed(self, days):
         for i in range(0, days):
+            if i%20 == 0:
+                print(f"Day {i}")
             self.next_day()
 
     def fish_count(self):
@@ -57,9 +59,9 @@ def input_file_to_list(file_path):
     return file_contents
 
 school = LanternSchool()
-starting_fish = input_file_to_list("day06_input.txt")[0].split(',')
+starting_fish = input_file_to_list("sample.txt")[0].split(',')
 for fish in starting_fish:
     school.create_fish(int(fish))
 
-school.days_elapsed(80)
+school.days_elapsed(180)
 print(school.fish_count())
