@@ -20,6 +20,39 @@ class CrabSubs:
 
         return total_fuel
 
+    def get_triangle_fuel(self, position):
+        total_fuel = 0
+        for crab in self.crab_positions.items():
+            n = abs(crab[0] - position)
+            triangle = ((n**2) + n)/2
+            total_fuel += triangle * crab[1]
+
+        return total_fuel
+
+    def least_fuel(self):
+        fuels = {}
+        for i in range(self.min_pos, self.max_pos+1):
+            fuel = self.get_total_fuel_in_pos(i)
+            if fuels.get(fuel):
+                pass
+            else:
+                fuels[fuel] = i
+
+        # return fuels[min(fuels)]
+        return min(fuels)
+
+    def least_triangle_fuel(self):
+        fuels = {}
+        for i in range(self.min_pos, self.max_pos+1):
+            fuel = self.get_triangle_fuel(i)
+            if fuels.get(fuel):
+                pass
+            else:
+                fuels[fuel] = i
+
+        # return fuels[min(fuels)]
+        return min(fuels)
+
 
 def input_file_to_list(file_path):
     """
@@ -35,9 +68,7 @@ def input_file_to_list(file_path):
     return file_contents
 
 
-crab_positions = input_file_to_list("sample.txt")
+crab_positions = input_file_to_list("day07_input.txt")
 crabs = CrabSubs(list(map(lambda x: int(x), crab_positions[0].split(','))))
-print(crabs.crab_positions)
-print(crabs.max_pos)
-print(crabs.min_pos)
-print(crabs.get_total_fuel_in_pos(3))
+print(crabs.least_fuel())
+print(crabs.least_triangle_fuel())
