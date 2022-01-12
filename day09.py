@@ -12,6 +12,26 @@ def input_file_to_list(file_path):
     return file_contents
 
 
-points = input_file_to_list("day09_input.txt")
-for p in points:
-    print(len(p))
+def create_long_list(file_path):
+    points = input_file_to_list(file_path)
+    list_of_points = []
+    for point in points:
+        for p in point:
+            list_of_points.append(p)
+
+    return list_of_points
+
+
+def get_corners(len, wid):
+    upper_left = 0
+    upper_right = len-1
+    lower_left = len * (wid - 1)
+    lower_right = (len * wid) - 1
+
+    return upper_left, upper_right, lower_left, lower_right
+
+
+points = create_long_list("day09_input.txt")
+# print(points)
+print(get_corners(100, 100))
+print(points[0], points[99], points[9900], points[9999])
