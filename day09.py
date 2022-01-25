@@ -31,7 +31,44 @@ def get_corners(len, wid):
     return upper_left, upper_right, lower_left, lower_right
 
 
-points = create_long_list("day09_input.txt")
-# print(points)
-print(get_corners(100, 100))
-print(points[0], points[99], points[9900], points[9999])
+def get_corners_adj(points, idx, loc, len):
+    beside = 0
+    across = 0
+
+    if loc == 0:
+        beside = idx+1
+        across = idx+len
+    if loc == 1:
+        beside = idx-1
+        across = idx+len
+    if loc == 2:
+        beside = idx+1
+        across = idx-len
+    if loc == 3:
+        beside = idx-1
+        across = idx-len
+
+    if points[idx] < points[beside] and points[idx] < points[across]:
+        return True
+    else:
+        return False
+
+def run_corners(points, len, wid):
+    low_points_idx = []
+    corners_idx = get_corners(len, wid)
+
+    for idx, i in enumerate(corners_idx):
+        if get_corners_adj(points, i, idx, len):
+            low_points_idx.append(i)
+
+    return low_points_idx
+
+
+
+points = create_long_list("sample.txt")
+corners = run_corners(points, 10, 5)
+
+# points = create_long_list("day09_input.txt")
+# print(get_corners(100, 100))
+# print(points[0], points[99], points[9900], points[9999])
+# print(get_corners_adj(points, 0, 'ul', 100))
