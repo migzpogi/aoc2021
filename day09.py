@@ -23,6 +23,7 @@ def create_long_list(file_path):
 
 
 def get_corners(len, wid):
+    # indices, not low points
     upper_left = 0
     upper_right = len-1
     lower_left = len * (wid - 1)
@@ -66,21 +67,53 @@ def run_corners(points, len, wid):
 
 
 def get_sides(len, wid):
+    # indices, not low points
     up = list(range(1, len-1))
     left = list(range(len, len*(int((wid*len)/len)-1), len))
     right = list(range(len+(len-1), len*(int((wid*len)/len)-1)+(len-1), len))
     down = list(range(((len*wid)-len)+1, (len*wid)-1))
-    print(up)
-    print(left)
-    print(right)
-    print(down)
+    return (up, left, right, down)
+
+
+def get_sides_adj(points, idx, loc, len):
+    low_points_idx = []
+    if loc == 'top':
+        for p in idx:
+            left = points[p-1]
+            right = points[p+1]
+            bottom = points[p+len]
+
+            if points[p] < left and points[p] < right and points[p] < bottom:
+                low_points_idx.append(p)
+
+    return low_points_idx
+
+
+
+def run_sides(points, len, wid):
+    low_points_idx = []
+    sides_idx = get_sides(len, wid)
+
+    top_lowpoints = get_sides_adj(points, sides_idx[0], 'top', len)
+    low_points_idx.extend(top_lowpoints)
+
+    return low_points_idx
 
 
 points = create_long_list("sample.txt")
-corners = run_corners(points, 10, 5) # indices of low points
 
-print(get_corners(100,100))
-get_sides(100, 100)
+idx_corners = get_corners(10, 5)  # indices of corners
+idx_sides = get_sides(10, 5)  # indices of sides
+print(idx_corners)
+print(idx_sides)
+
+low_corners = run_corners(points, 10, 5)
+print(low_corners)  # low points index, corners
+
+low_sides = run_sides(points, 10, 5)
+print(low_sides) # low points index, sides
+
+
 
 # points = create_long_list("day09_input.txt")
 # print(get_corners(100, 100))
